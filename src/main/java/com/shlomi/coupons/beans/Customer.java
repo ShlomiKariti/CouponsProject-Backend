@@ -26,13 +26,13 @@ public class Customer {
 	
 	@Column(name = "email", unique = true, nullable = false)
 	private String email;
-	
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @MapsId
-    private User user;
 
     @Column(name = "age", unique = false, nullable = false)
     private int age;
+    
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @MapsId
+    private User user;
 
     public long getId() {
         return user.getId();
