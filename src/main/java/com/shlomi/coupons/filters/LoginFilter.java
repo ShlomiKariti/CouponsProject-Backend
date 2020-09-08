@@ -19,7 +19,7 @@ import com.shlomi.coupons.logic.CacheController;
 
 
 @Component
-@Order(1)
+@Order(2)
 public class LoginFilter implements Filter {
 
 	@Autowired
@@ -34,6 +34,7 @@ public class LoginFilter implements Filter {
 			chain.doFilter(httpRequest, response);
 			return;
 		}
+	
 
 		if (url.endsWith("/login")) {
 			chain.doFilter(httpRequest, response);

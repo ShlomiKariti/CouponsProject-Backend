@@ -24,7 +24,7 @@ public class CustomersApi {
 	@Autowired
 	private CustomersController customersController;
 
-	@PostMapping
+	@PostMapping("/register")
 	public void createCustomer(@RequestBody Customer customer) throws ApplicationException {
 		this.customersController.createCustomer(customer);
 

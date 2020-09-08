@@ -44,7 +44,7 @@ public class CompaniesController {
 			return company.getId();
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_COMPANY,"General Error");
 		}
 
 	}
@@ -56,7 +56,7 @@ public class CompaniesController {
 			companiesDao.delete(company);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_COMPANY,"General Error");
 		}
 	}
 
@@ -67,7 +67,7 @@ public class CompaniesController {
 			return company;
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_COMPANY,"General Error");
 		}
 	}
 
@@ -77,7 +77,7 @@ public class CompaniesController {
 			this.companiesDao.save(company);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_COMPANY,"General Error");
 		}
 	}
 
@@ -88,7 +88,7 @@ public class CompaniesController {
 			return this.companiesDao.getAllCompanies();
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_COMPANY,"General Error");
 		}
 	}
 }

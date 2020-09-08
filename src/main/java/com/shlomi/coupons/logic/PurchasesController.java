@@ -41,7 +41,7 @@ public class PurchasesController {
 			this.purchasesDao.save(purchase);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_PURCHASE,"General Error");
 		}
 	}
 
@@ -52,7 +52,7 @@ public class PurchasesController {
 			purchasesDao.delete(purchase);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_PURCHASE,"General Error");
 		}
 	}
 
@@ -63,7 +63,7 @@ public class PurchasesController {
 			return purchase;
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_PURCHASE,"General Error");
 		}
 	}
 
@@ -73,7 +73,7 @@ public class PurchasesController {
 			return this.purchasesDao.getAllPurchasesByCustomerID(customerId);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_PURCHASE,"General Error");
 		}
 
 	}
@@ -83,7 +83,7 @@ public class PurchasesController {
 			return this.purchasesDao.getAllPurchasesByCouponID(couponId);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_PURCHASE,"General Error");
 		}
 	}
 }

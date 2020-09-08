@@ -28,7 +28,7 @@ public class UsersApi {
 	@Autowired
 	private UsersController usersController;
 
-	@PostMapping("/register")
+	@PostMapping
 	public void createUser(@RequestBody User user) throws ApplicationException {
 		this.usersController.createUser(user);
 	}

@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 
 
@@ -28,7 +27,6 @@ public class Customer {
 	@Column(name = "email", unique = true, nullable = false)
 	private String email;
 	
-	@Transient
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @MapsId
     private User user;
@@ -87,10 +85,18 @@ public class Customer {
         this.user.setUsername(username);
     }
 
-    @Override
-    public String toString() {
-        return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", user=" + user + "]";
-    }
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", user=" + user + ", age=" + age + "]";
+	}
 
 
 }
