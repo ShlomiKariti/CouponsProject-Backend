@@ -10,7 +10,6 @@ import com.shlomi.coupons.beans.User;
 
 public interface IUsersDao extends CrudRepository<User, Long> {
 
-	@Query("SELECT u FROM User u WHERE username = :username")
 	public User findByUsername(@Param("username") String username);
 
 	@Query("SELECT u FROM User u")

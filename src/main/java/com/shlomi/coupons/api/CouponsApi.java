@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shlomi.coupons.beans.Coupon;
+import com.shlomi.coupons.dataobjects.CouponDataObject;
 import com.shlomi.coupons.enums.Category;
 import com.shlomi.coupons.exceptions.ApplicationException;
 import com.shlomi.coupons.logic.CouponsController;
@@ -46,7 +47,7 @@ public class CouponsApi {
 	}
 
 	@GetMapping
-	public List<Coupon> getAllCoupons() throws ApplicationException {
+	public List<CouponDataObject> getAllCoupons() throws ApplicationException {
 		return this.couponsController.getAllCoupons();
 	}
 	

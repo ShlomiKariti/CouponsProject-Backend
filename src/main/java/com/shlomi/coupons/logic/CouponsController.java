@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import com.shlomi.coupons.beans.Coupon;
 import com.shlomi.coupons.dao.ICouponsDao;
+import com.shlomi.coupons.dataobjects.CouponDataObject;
 import com.shlomi.coupons.enums.Category;
 import com.shlomi.coupons.enums.ErrorType;
 import com.shlomi.coupons.exceptions.ApplicationException;
@@ -125,7 +126,7 @@ public class CouponsController {
 		couponsDao.removeExpiredCoupons(currentDate);
 	}
 
-	public List<Coupon> getAllCoupons() throws ApplicationException {
+	public List<CouponDataObject> getAllCoupons() throws ApplicationException {
 
 		try {
 			return this.couponsDao.getAllCoupons();

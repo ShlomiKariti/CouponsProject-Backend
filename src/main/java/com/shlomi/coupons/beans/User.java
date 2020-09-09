@@ -33,7 +33,7 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	@Column(unique = false, nullable = false)
 	private UserType type;
-
+	
 	@Column(name = "company_id")
 	private Long companyId;
 
@@ -74,20 +74,20 @@ public class User {
 		this.type = type;
 	}
 
-	public Long getCompanyId() {
-		return companyId;
-	}
-
-	public void setCompanyId(Long companyId) {
-		this.companyId = companyId;
-	}
-
 	public Company getCompany() {
 		return company;
 	}
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+
+	public Long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
 	}
 
 	@Override

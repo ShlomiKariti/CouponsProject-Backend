@@ -1,8 +1,5 @@
 package com.shlomi.coupons.logic;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.List;
 
@@ -115,7 +112,7 @@ public class UsersController {
 
 		String token = Utils.generateToken();
 		PostLoginData postLoginData = new PostLoginData(user.getId(), user.getCompanyId(), user.getType());
-		this.cacheController.put(token, postLoginData);
+		cacheController.put(token, postLoginData);
 		return new SuccessfulLoginData(token, postLoginData.getUserType());
 
 	}
