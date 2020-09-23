@@ -5,20 +5,22 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.shlomi.coupons.beans.PostLoginData;
+
 @Component
 public class CacheController {
 	
-	private Map<String, Object> dataMap;
+	private Map<String, PostLoginData> dataMap;
 	
 	public CacheController() {
 		this.dataMap = new HashMap<>();
 	}
 
-	public void put(String key, Object value) {
+	public void put(String key, PostLoginData value) {
 		this.dataMap.put(key, value);
 	}
 	
-	public Object get(String key) {
+	public PostLoginData get(String key) {
 		return this.dataMap.get(key);
 	}
 	

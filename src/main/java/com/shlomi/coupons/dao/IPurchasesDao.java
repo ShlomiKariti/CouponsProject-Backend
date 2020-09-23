@@ -10,8 +10,8 @@ import com.shlomi.coupons.beans.Purchase;
 
 public interface IPurchasesDao extends CrudRepository<Purchase, Long> {
 	
-	@Query("SELECT p FROM Purchase p WHERE customerId = :customerId")
-	public List<Purchase> getAllPurchasesByCustomerID(@Param("customerId")long customerId);
+	@Query("SELECT p FROM Purchase p WHERE p.customer.id = :customerId")
+	public List<Purchase> getAllPurchasesByUserID(@Param("customerId")long customerId);
 
 	@Query("SELECT p FROM Purchase p WHERE couponId = :couponId")
 	public List<Purchase> getAllPurchasesByCouponID(long couponId);

@@ -50,14 +50,14 @@ public class CouponsApi {
 	public List<CouponDataObject> getAllCoupons() throws ApplicationException {
 		return this.couponsController.getAllCoupons();
 	}
-	
+
 	@GetMapping("/byCategory/{category}")
 	public List<Coupon> findByCategory(@PathVariable("category")String category) throws ApplicationException {
 		Category categoryName = Category.valueOf(category.toUpperCase());
 		return this.couponsController.findByCategory(categoryName);
 
 	}
-	
+
 	@GetMapping("/byCompany/{company_id}")
 	public List<Coupon> getAllCouponsByCompanyId(@PathVariable("company_id")long companyID) throws ApplicationException {
 		return this.couponsController.getAllCouponsByCompanyId(companyID);

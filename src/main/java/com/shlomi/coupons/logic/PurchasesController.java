@@ -67,10 +67,10 @@ public class PurchasesController {
 		}
 	}
 
-	public List<Purchase> getAllPurchasesByCustomerID(long customerId) throws ApplicationException {
+	public List<Purchase> getAllPurchasesByUserID(long userId) throws ApplicationException {
 
 		try {
-			return this.purchasesDao.getAllPurchasesByCustomerID(customerId);
+			return this.purchasesDao.getAllPurchasesByUserID(userId);
 		}
 		catch (Exception e) {
 			throw new ApplicationException(ErrorType.INVALID_PURCHASE,"General Error");

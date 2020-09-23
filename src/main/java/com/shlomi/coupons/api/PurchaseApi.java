@@ -7,27 +7,30 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shlomi.coupons.beans.Customer;
+import com.shlomi.coupons.beans.PostLoginData;
 import com.shlomi.coupons.beans.Purchase;
 import com.shlomi.coupons.exceptions.ApplicationException;
 import com.shlomi.coupons.logic.PurchasesController;
 
-public class PurchaseApi {
-
 	@RestController
 	@RequestMapping("/purchase")
-	public class PurchasesApi {
+	public class PurchaseApi {
 
 		@Autowired
 		private PurchasesController purchasesController;
 
 
 		@PostMapping
-		public void createPurchase(@RequestBody Purchase purchase) throws ApplicationException {
+		public void createPurchase(@RequestBody Purchase purchase, @RequestAttribute("userData") PostLoginData postLoginData) throws ApplicationException {
+			purchase.setCustomer(new Customer());
+			purchase.getCustomer().setId(postLoginData.getId());
 			this.purchasesController.createPurchase(purchase);
 		}
 
@@ -41,9 +44,9 @@ public class PurchaseApi {
 			return this.purchasesController.getPurchase(id);
 
 		}
-		@GetMapping("/customer/{customer_id}")
-		public List<Purchase> getAllPurchasesByCustomerID(@RequestParam("customer_id")long customerId) throws ApplicationException {
-			return this.purchasesController.getAllPurchasesByCustomerID(customerId);
+		@GetMapping("/customer")
+		public List<Purchase> getAllPurchasesByUserID(@RequestAttribute("userData") PostLoginData postLoginData) throws ApplicationException {
+			return this.purchasesController.getAllPurchasesByUserID(postLoginData.getId());
 		}
 
 		@GetMapping("/coupon/{coupon_id}")
@@ -51,5 +54,4 @@ public class PurchaseApi {
 			return this.purchasesController.getAllPurchasesByCouponID(couponId);
 
 		}
-	}
 }

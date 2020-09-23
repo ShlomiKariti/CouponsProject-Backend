@@ -47,6 +47,9 @@ public class Coupon {
 	@Column(unique = false, nullable = false)
 	private int couponStock;
 	
+	@Column(unique = false, nullable = false)
+	private String image;
+	
 	@Column(name = "expirationDate", unique = false, nullable = true)
 	private Date expirationDate;
 	
@@ -122,12 +125,39 @@ public class Coupon {
 	public void setCouponStock(int couponStock) {
 		this.couponStock = couponStock;
 	}
+	
+	
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public List<Purchase> getPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 
 	@Override
 	public String toString() {
 		return "Coupon [id=" + id + ", companyId=" + companyId + ", title=" + title + ", category=" + category
-				+ ", description=" + description + ", price=" + price + ", couponStock=" + couponStock
-				+ ", expirationDate=" + expirationDate + "]";
+				+ ", description=" + description + ", price=" + price + ", couponStock=" + couponStock + ", image="
+				+ image + ", expirationDate=" + expirationDate + ", company=" + company + ", purchases=" + purchases
+				+ "]";
 	}
 
 }

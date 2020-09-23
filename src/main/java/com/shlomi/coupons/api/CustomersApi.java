@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shlomi.coupons.beans.Customer;
+import com.shlomi.coupons.beans.PostLoginData;
 import com.shlomi.coupons.exceptions.ApplicationException;
 import com.shlomi.coupons.logic.CustomersController;
 
@@ -35,8 +37,8 @@ public class CustomersApi {
 	}
 
 	@GetMapping("/{id}")
-	public Customer getCustomer(@PathVariable("id") long id) throws ApplicationException {
-		return this.customersController.getCustomer(id);
+	public Customer getCustomer(@RequestAttribute("userData") PostLoginData postLoginData) throws ApplicationException {
+		return this.customersController.getCustomer(postLoginData.getId());
 	}
 
 	@DeleteMapping("/{id}")

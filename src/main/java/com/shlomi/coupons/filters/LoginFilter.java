@@ -32,6 +32,11 @@ public class LoginFilter implements Filter {
 			chain.doFilter(httpRequest, response);
 			return;
 		}
+		
+		if (url.endsWith("/coupon")) {
+			chain.doFilter(httpRequest, response);
+			return;
+		}
 	
 
 		if (url.endsWith("/login")) {

@@ -21,6 +21,9 @@ public interface ICouponsDao extends CrudRepository<Coupon, Long> {
 
 	@Query("SELECT NEW com.shlomi.coupons.dataobjects.CouponDataObject(c, c.company.companyName) FROM Coupon c")
 	public List<CouponDataObject> getAllCoupons();
+	
+//	@Query("SELECT c from Coupon c")
+//	public List<Coupon> getAllCoupons();
 
 	@Query("SELECT c FROM Coupon c WHERE c.companyId = :companyId")
 	public List<Coupon> getAllCouponsByCompanyId(@Param("companyId") long companyID);

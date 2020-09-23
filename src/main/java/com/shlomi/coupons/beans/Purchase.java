@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
@@ -22,9 +22,6 @@ public class Purchase {
 	@GeneratedValue
 	@Column(name = "id")
 	private long id;
-
-	@Column(name = "customer_id", unique = false, nullable = false)
-	private long customerId;
 	
 	@Column(name = "Amount", unique = false, nullable = false)
 	private int amount;
@@ -32,11 +29,16 @@ public class Purchase {
 	@Column(name = "purchase_date", nullable = false)
 	private Date purchaseDate;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "coupon_id", insertable = false, updatable = false)
-	@JsonIgnore
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "coupon_id")
 	private Coupon coupon;
-
+	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
+	
 	public long getId() {
 		return id;
 	}
@@ -45,13 +47,6 @@ public class Purchase {
 		this.id = id;
 	}
 
-	public long getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(long customerId) {
-		this.customerId = customerId;
-	}
 
 	public int getAmount() {
 		return amount;
@@ -77,13 +72,18 @@ public class Purchase {
 		this.coupon = coupon;
 	}
 
-	@Override
-	public String toString() {
-		return "Purchase [id=" + id + ", customerId=" + customerId + ", amount=" + amount + ", purchaseDate="
-				+ purchaseDate + ", coupon=" + coupon + "]";
+	public Customer getCustomer() {
+		return customer;
 	}
 
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
-	
+	@Override
+	public String toString() {
+		return "Purchase [id=" + id + ", amount=" + amount + ", purchaseDate=" + purchaseDate + ", coupon=" + coupon
+				+ ", customer=" + customer + "]";
+	}
 	
 }

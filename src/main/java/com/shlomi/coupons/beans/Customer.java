@@ -39,10 +39,8 @@ public class Customer {
     }
 
     public void setId(long id) {
-        this.user.setId(id);
+        this.id = id;
     }
-
-
 
     public String getPassword() {
         return user.getPassword();
@@ -51,7 +49,6 @@ public class Customer {
     public void setPassword(String password) {
         this.user.setPassword(password);
     }
-
 
     public String getName() {
         return name;

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shlomi.coupons.beans.ChangePasswordDetails;
+import com.shlomi.coupons.beans.PostLoginData;
 import com.shlomi.coupons.beans.SuccessfulLoginData;
 import com.shlomi.coupons.beans.User;
 import com.shlomi.coupons.beans.UserLoginDetails;
@@ -56,10 +57,11 @@ public class UsersApi {
 	public List<User> getAllUsers() throws ApplicationException {
 		return this.usersController.getAllUsers();
 	}
-	@GetMapping("/{companyId}")
+	@GetMapping("/byCompany/{companyId}")
 	public List<User> getAllUsersByCompanyID(@PathVariable("company_id")long companyId) throws ApplicationException {
 		return this.usersController.getAllUsersByCompanyID(companyId);
 	}
+	
 	@PutMapping("/changePassword")
 	public void changePassword(@RequestBody ChangePasswordDetails changePasswordDetails) throws ApplicationException {
 		this.usersController.changePassword(changePasswordDetails.getUsername(), changePasswordDetails.getOldPassword(), changePasswordDetails.getNewPassword());

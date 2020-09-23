@@ -5,7 +5,7 @@ import com.shlomi.coupons.beans.Coupon;
 
 public class CouponDataObject {
 
-	public Coupon coupon;
+	private Coupon coupon;
 	
 	private String companyName;
 
@@ -13,7 +13,6 @@ public class CouponDataObject {
 	}
 	
 	public CouponDataObject(Coupon coupon, String companyName) {
-		super();
 		this.coupon = coupon;
 		this.companyName = companyName;
 	}

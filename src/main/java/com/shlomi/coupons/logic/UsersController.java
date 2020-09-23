@@ -162,4 +162,17 @@ public class UsersController {
 		return existingPassword.equals(enc.encodeToString(userInputHash));
 
 	}
+
+	public PostLoginData getPostLoginDataByToken(String token) throws ApplicationException {
+
+		PostLoginData postLoginData = cacheController.get(token);
+		if(postLoginData == null) {
+			throw new ApplicationException(ErrorType.GENERAL_ERROR, "User is not logged in");
+		}
+		return postLoginData;
+		
+	}
+
+	
+	
 }
