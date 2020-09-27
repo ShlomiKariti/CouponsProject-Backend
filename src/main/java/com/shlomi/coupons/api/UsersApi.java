@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,8 +64,9 @@ public class UsersApi {
 	}
 	
 	@PutMapping("/changePassword")
-	public void changePassword(@RequestBody ChangePasswordDetails changePasswordDetails) throws ApplicationException {
-		this.usersController.changePassword(changePasswordDetails.getUsername(), changePasswordDetails.getOldPassword(), changePasswordDetails.getNewPassword());
+	public void changePassword(@RequestBody ChangePasswordDetails changePasswordDetails, @RequestAttribute("userData") PostLoginData postLoginData) throws ApplicationException {
+		User user = this.usersController.getUser(postLoginData.getId());
+		this.usersController.changePassword(user.getUsername(), changePasswordDetails.getOldPassword(), changePasswordDetails.getNewPassword());
 	}
 
 }

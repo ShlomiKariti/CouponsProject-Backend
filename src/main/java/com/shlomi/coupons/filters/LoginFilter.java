@@ -33,7 +33,7 @@ public class LoginFilter implements Filter {
 			return;
 		}
 		
-		if (url.endsWith("/coupon")) {
+		if (url.endsWith("/coupon") && httpRequest.getMethod().equals("GET")) {
 			chain.doFilter(httpRequest, response);
 			return;
 		}

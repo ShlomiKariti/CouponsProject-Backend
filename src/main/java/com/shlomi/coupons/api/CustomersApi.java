@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shlomi.coupons.beans.Customer;
 import com.shlomi.coupons.beans.PostLoginData;
+import com.shlomi.coupons.beans.User;
 import com.shlomi.coupons.exceptions.ApplicationException;
 import com.shlomi.coupons.logic.CustomersController;
+import com.shlomi.coupons.logic.UsersController;
 
 @RestController
 @RequestMapping("/customer")
@@ -25,6 +27,9 @@ public class CustomersApi {
 
 	@Autowired
 	private CustomersController customersController;
+	
+	@Autowired
+	private UsersController usersController;
 
 	@PostMapping("/register")
 	public void createCustomer(@RequestBody Customer customer) throws ApplicationException {
@@ -32,11 +37,13 @@ public class CustomersApi {
 
 	}
 	@PutMapping
-	public void updateCustomer(Customer customer) throws ApplicationException {
+	public void updateCustomer(@RequestBody Customer customer, @RequestAttribute("userData") PostLoginData postLoginData) throws ApplicationException {
+		User user = this.usersController.getUser(postLoginData.getId());
+		customer.setUser(user);
 		this.customersController.updateCustomer(customer);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping
 	public Customer getCustomer(@RequestAttribute("userData") PostLoginData postLoginData) throws ApplicationException {
 		return this.customersController.getCustomer(postLoginData.getId());
 	}

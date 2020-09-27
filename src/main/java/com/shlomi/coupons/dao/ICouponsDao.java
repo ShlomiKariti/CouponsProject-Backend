@@ -25,7 +25,7 @@ public interface ICouponsDao extends CrudRepository<Coupon, Long> {
 //	@Query("SELECT c from Coupon c")
 //	public List<Coupon> getAllCoupons();
 
-	@Query("SELECT c FROM Coupon c WHERE c.companyId = :companyId")
+	@Query("SELECT c FROM Coupon c WHERE c.company.id = :companyId")
 	public List<Coupon> getAllCouponsByCompanyId(@Param("companyId") long companyID);
 
 

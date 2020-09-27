@@ -69,6 +69,8 @@ public class CouponsController {
 		if(coupon.getPrice()==0) {
 			throw new ApplicationException(ErrorType.INVALID_PRICE,"No price input.");
 		}
+		
+		
 		try {
 			this.couponsDao.save(coupon);
 		}

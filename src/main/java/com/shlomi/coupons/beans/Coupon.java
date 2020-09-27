@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shlomi.coupons.enums.Category;
 
 @Entity
@@ -27,9 +28,6 @@ public class Coupon {
 	@GeneratedValue
 	@Column(name = "id")
 	private long id;
-	
-	@Column(name = "company_id", unique = false, nullable = false)
-	private long companyId;
 	
 	@Column(unique = false, nullable = false)
 	private String title;
@@ -52,10 +50,10 @@ public class Coupon {
 	
 	@Column(name = "expirationDate", unique = false, nullable = true)
 	private Date expirationDate;
-	
+
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id", insertable = false, updatable = false)
-	@JsonIgnore
+    @JoinColumn(name = "company_id")
 	private Company company;
 	
 	@OneToMany(mappedBy = "coupon", cascade = CascadeType.REMOVE)
@@ -68,14 +66,6 @@ public class Coupon {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public long getCompanyId() {
-		return companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		this.companyId = companyId;
 	}
 
 	public Category getCategory() {
@@ -154,10 +144,10 @@ public class Coupon {
 
 	@Override
 	public String toString() {
-		return "Coupon [id=" + id + ", companyId=" + companyId + ", title=" + title + ", category=" + category
-				+ ", description=" + description + ", price=" + price + ", couponStock=" + couponStock + ", image="
-				+ image + ", expirationDate=" + expirationDate + ", company=" + company + ", purchases=" + purchases
-				+ "]";
+		return "Coupon [id=" + id + ", title=" + title + ", category=" + category + ", description=" + description
+				+ ", price=" + price + ", couponStock=" + couponStock + ", image=" + image + ", expirationDate="
+				+ expirationDate + ", company=" + company + ", purchases=" + purchases + "]";
 	}
+
 
 }

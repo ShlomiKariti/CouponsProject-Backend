@@ -62,10 +62,10 @@ public class CustomersController {
 	}
 
 
-	public Customer getCustomer(long companyId) throws ApplicationException {
+	public Customer getCustomer(long customerId) throws ApplicationException {
 
 		try {
-			Customer customer = customersDao.findById(companyId).get();
+			Customer customer = customersDao.findById(customerId).get();
 			return customer;
 		}
 		catch (Exception e) {
@@ -75,6 +75,10 @@ public class CustomersController {
 
 	public void updateCustomer(Customer customer) throws ApplicationException {
 
+		if(!Utils.isEmailValid(customer.getEmail())) {
+			throw new ApplicationException(ErrorType.INVALID_EMAIL,"Invalid email address");
+		}
+		
 		try {
 			this.customersDao.save(customer);
 		}
