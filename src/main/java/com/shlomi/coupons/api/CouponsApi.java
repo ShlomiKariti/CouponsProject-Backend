@@ -40,7 +40,7 @@ public class CouponsApi {
 
 	}
 	@PutMapping
-	public void updateCoupon(Coupon coupon) throws ApplicationException {
+	public void updateCoupon(@RequestBody Coupon coupon) throws ApplicationException {
 		this.couponsController.updateCoupon(coupon);
 	}
 
@@ -66,9 +66,9 @@ public class CouponsApi {
 
 	}
 
-	@GetMapping("/byCompany/{company_id}")
-	public List<Coupon> getAllCouponsByCompanyId(@PathVariable("company_id")long companyID) throws ApplicationException {
-		return this.couponsController.getAllCouponsByCompanyId(companyID);
+	@GetMapping("/byCompany")
+	public List<Coupon> getAllCouponsByCompanyId(@RequestAttribute("userData") PostLoginData postLoginData) throws ApplicationException {
+		return this.couponsController.getAllCouponsByCompanyId(postLoginData.getCompanyId());
 	}
 
 }

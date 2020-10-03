@@ -32,4 +32,9 @@ public class PostLoginData {
 		return userType;
 	}
 
+	@Override
+	public String toString() {
+		return "PostLoginData [id=" + id + ", companyId=" + companyId + ", userType=" + userType + "]";
+	}
+	
 }

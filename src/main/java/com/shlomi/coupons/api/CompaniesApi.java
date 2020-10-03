@@ -1,5 +1,6 @@
 package com.shlomi.coupons.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shlomi.coupons.beans.Company;
+import com.shlomi.coupons.beans.Coupon;
+import com.shlomi.coupons.beans.PostLoginData;
 import com.shlomi.coupons.exceptions.ApplicationException;
 import com.shlomi.coupons.logic.CompaniesController;
 
@@ -48,6 +52,11 @@ public class CompaniesApi {
 	@GetMapping
 	public List<Company> getAllCompanies() throws ApplicationException {
 		return this.companiesController.getAllCompanies();
+	}
+	
+	@GetMapping("/byName/{name}")
+	public Company getCompanyByName(@PathVariable("name")String name) throws ApplicationException {
+		return this.companiesController.getCompanyByName(name);
 	}
 
 }

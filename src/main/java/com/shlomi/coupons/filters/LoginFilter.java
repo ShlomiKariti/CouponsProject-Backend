@@ -37,7 +37,6 @@ public class LoginFilter implements Filter {
 			chain.doFilter(httpRequest, response);
 			return;
 		}
-	
 
 		if (url.endsWith("/login")) {
 			chain.doFilter(httpRequest, response);

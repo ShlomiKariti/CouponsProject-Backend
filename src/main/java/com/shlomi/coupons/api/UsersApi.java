@@ -36,7 +36,7 @@ public class UsersApi {
 	}
 
 	@PutMapping
-	public void updateUser(User user) throws ApplicationException {
+	public void updateUser(@RequestBody User user) throws ApplicationException {
 		this.usersController.updateUser(user);
 	}
 

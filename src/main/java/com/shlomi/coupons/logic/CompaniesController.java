@@ -91,5 +91,15 @@ public class CompaniesController {
 			throw new ApplicationException(ErrorType.INVALID_COMPANY,"General Error");
 		}
 	}
+
+	public Company getCompanyByName(String name) throws ApplicationException {
+		try {
+			Company company = companiesDao.getCompanyByName(name);
+			return company;
+		}
+		catch (Exception e) {
+			throw new ApplicationException(ErrorType.INVALID_COMPANY,"Company not found.");
+		}
+	}
 }
 

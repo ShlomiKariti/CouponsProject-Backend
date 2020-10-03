@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "companies")
@@ -36,13 +37,13 @@ public class Company {
 	@Column(nullable = false)
 	private String address;
 	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE)
-	@JsonIgnore
     private List<User> users;
 	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE)
-	@JsonIgnore
-	private List<Coupon>coupons;
+	private List<Coupon> coupons;
 	
 	
 	public long getId() {
