@@ -16,4 +16,7 @@ public interface IPurchasesDao extends CrudRepository<Purchase, Long> {
 	@Query("SELECT p FROM Purchase p WHERE couponId = :couponId")
 	public List<Purchase> getAllPurchasesByCouponID(long couponId);
 
+	@Query("SELECT p FROM Purchase p")
+	public List<Purchase> getAllPurchases();
+
 }

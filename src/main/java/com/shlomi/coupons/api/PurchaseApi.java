@@ -52,6 +52,12 @@ import com.shlomi.coupons.logic.PurchasesController;
 		@GetMapping("/coupon/{coupon_id}")
 		public List<Purchase> getAllPurchasesByCouponID(@RequestParam("coupon_id")long couponId) throws ApplicationException {
 			return this.purchasesController.getAllPurchasesByCouponID(couponId);
-
 		}
+		
+		@GetMapping
+		public List<Purchase> getAllPurchases() throws ApplicationException {
+			return this.purchasesController.getAllPurchases();
+		}
+		
+		
 }

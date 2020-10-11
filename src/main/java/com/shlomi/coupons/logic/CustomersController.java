@@ -24,7 +24,7 @@ public class CustomersController {
 	}
 
 	public void createCustomer(Customer customer) throws ApplicationException {
-		// Validation
+
 		if (customer == null) {
 			throw new ApplicationException(ErrorType.INVALID_CUSTOMER,"A null customer");
 		}
@@ -46,7 +46,7 @@ public class CustomersController {
 			this.customersDao.save(customer);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_CUSTOMER,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_CUSTOMER,"Failed to create customer.");
 		}
 	}
 
@@ -57,7 +57,7 @@ public class CustomersController {
 			customersDao.delete(customer);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_CUSTOMER,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_CUSTOMER,"Failed to remove the customer.");
 		}
 	}
 
@@ -69,11 +69,19 @@ public class CustomersController {
 			return customer;
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_CUSTOMER,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_CUSTOMER,"Failed to find customer.");
 		}
 	}
 
 	public void updateCustomer(Customer customer) throws ApplicationException {
+		
+		if (customer == null) {
+			throw new ApplicationException(ErrorType.INVALID_CUSTOMER,"A null customer");
+		}
+
+		if(customer.getName() == "") {
+			throw new ApplicationException(ErrorType.INVALID_CUSTOMER,"Blank name");
+		}
 
 		if(!Utils.isEmailValid(customer.getEmail())) {
 			throw new ApplicationException(ErrorType.INVALID_EMAIL,"Invalid email address");
@@ -83,7 +91,7 @@ public class CustomersController {
 			this.customersDao.save(customer);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_CUSTOMER,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_CUSTOMER,"Failed to update customer.");
 		}
 	}
 
@@ -93,7 +101,7 @@ public class CustomersController {
 			return this.customersDao.getAllCustomers();
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_CUSTOMER,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_CUSTOMER,"Failed to find customers.");
 		}
 	}
 
@@ -103,7 +111,7 @@ public class CustomersController {
 			return this.customersDao.getAllCustomersByMinAge(minAge);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_CUSTOMER,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_CUSTOMER,"Failed to find customers.");
 		}
 	}
 	

@@ -53,6 +53,7 @@ public class CustomersApi {
 		this.customersController.removeCustomer(id);
 	}
 
+	@GetMapping("/all")
 	public List<Customer> getAllCustomers() throws ApplicationException {
 		return this.customersController.getAllCustomers();
 	}

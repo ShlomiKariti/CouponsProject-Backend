@@ -31,7 +31,7 @@ public class UsersController {
 	}
 
 	public Long createUser(User user) throws ApplicationException{
-		// Validation
+
 		if (user == null) {
 			throw new ApplicationException(ErrorType.INVALID_USER,"A null user");
 		}
@@ -49,12 +49,9 @@ public class UsersController {
 		}
 
 		if (user.getUsername().length() < 2) {
-			throw new ApplicationException(ErrorType.INVALID_USER,"User name is too short");
+			throw new ApplicationException(ErrorType.INVALID_USER,"Username is too short");
 		}
 
-		//		if (this.usersDao.isUsernameExists(user.getUsername())) {
-		//			throw new ApplicationException(ErrorType.INVALID_USER,"The username is not available, please choose a different one");
-		//		}
 		byte[] hashedPassword = Utils.hashPassword(user.getPassword());
 		Base64.Encoder enc = Base64.getEncoder();
 		user.setPassword(enc.encodeToString(hashedPassword));
@@ -64,7 +61,7 @@ public class UsersController {
 			return user.getId();
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_USER,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_USER,"Failed to create user.");
 		}
 	}
 
@@ -75,7 +72,7 @@ public class UsersController {
 			usersDao.delete(user);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_USER,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_USER,"Failed to remove user.");
 		}
 	}
 
@@ -86,22 +83,42 @@ public class UsersController {
 			return user;
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_USER,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_USER,"Failed to find user.");
 		}
 	}
 
 	public void updateUser(User user) throws ApplicationException {
+		
+		if (user == null) {
+			throw new ApplicationException(ErrorType.INVALID_USER,"A null user");
+		}
+
+		if (user.getPassword().equals("")) {
+			throw new ApplicationException(ErrorType.INVALID_PASSWORD,"An empty password");
+		}
+
+		if (user.getPassword().length() < 6) {
+			throw new ApplicationException(ErrorType.INVALID_PASSWORD,"Password is too short");
+		}
+
+		if (user.getPassword().length() > 10) {
+			throw new ApplicationException(ErrorType.INVALID_PASSWORD,"Password is too long");
+		}
+
+		if (user.getUsername().length() < 2) {
+			throw new ApplicationException(ErrorType.INVALID_USER,"Username is too short");
+		}
 
 		try {
 			this.usersDao.save(user);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_USER,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_USER,"Failed to update user.");
 		}
 	}
 
 	public SuccessfulLoginData login(UserLoginDetails userLoginDetails) throws ApplicationException {
-
+		
 		User user = this.usersDao.findByUsername(userLoginDetails.getUsername());
 		if (user == null) {
 			throw new ApplicationException(ErrorType.FAILED_LOGIN, "Invalid username or password");
@@ -109,9 +126,16 @@ public class UsersController {
 		if(!this.comparePassword(user.getPassword(), userLoginDetails.getPassword())) {
 			throw new ApplicationException(ErrorType.FAILED_LOGIN, "Invalid username or password");
 		}
-
+		PostLoginData postLoginData;
+		
+		if(user.getCompany() !=null) {
+			postLoginData = new PostLoginData(user.getId(), user.getCompany().getId(), user.getType());
+			System.out.println(user.getCompany().getId() + "----------------------------------------------------");
+		}
+		else {
+			postLoginData = new PostLoginData(user.getId(), null, user.getType());
+		}
 		String token = Utils.generateToken();
-		PostLoginData postLoginData = new PostLoginData(user.getId(), user.getCompanyId(), user.getType());
 		cacheController.put(token, postLoginData);
 		return new SuccessfulLoginData(token, postLoginData.getUserType());
 
@@ -123,7 +147,7 @@ public class UsersController {
 			return this.usersDao.getAllUsers();
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_USER,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_USER,"Failed to find users.");
 		}
 	}
 
@@ -133,7 +157,7 @@ public class UsersController {
 			return this.usersDao.getAllUsersByCompanyID(companyId);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_USER,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_USER,"Failed to find users.");
 		}
 	}
 

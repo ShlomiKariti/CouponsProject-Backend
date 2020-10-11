@@ -11,17 +11,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shlomi.coupons.beans.Company;
 import com.shlomi.coupons.beans.Coupon;
 import com.shlomi.coupons.beans.PostLoginData;
-import com.shlomi.coupons.beans.User;
 import com.shlomi.coupons.dataobjects.CouponDataObject;
 import com.shlomi.coupons.enums.Category;
 import com.shlomi.coupons.exceptions.ApplicationException;
 import com.shlomi.coupons.logic.CouponsController;
-import com.shlomi.coupons.logic.UsersController;
 
 
 @RestController
@@ -68,7 +67,13 @@ public class CouponsApi {
 
 	@GetMapping("/byCompany")
 	public List<Coupon> getAllCouponsByCompanyId(@RequestAttribute("userData") PostLoginData postLoginData) throws ApplicationException {
+		System.out.println(postLoginData.getCompanyId());
 		return this.couponsController.getAllCouponsByCompanyId(postLoginData.getCompanyId());
+	}
+	
+	@GetMapping("/company")
+	public List<Coupon> getAllCouponsByCompany(@RequestParam("id")long companyId) throws ApplicationException {
+		return this.couponsController.getAllCouponsByCompanyId(companyId);
 	}
 
 }

@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shlomi.coupons.enums.UserType;
 
 
@@ -33,13 +34,10 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	@Column(unique = false, nullable = false)
 	private UserType type;
-	
-	@Column(name = "company_id")
-	private Long companyId;
 
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "company_id", insertable = false, updatable = false)
-	@JsonIgnore
+	@JoinColumn(name = "company_id")
 	private Company company;
 
 	public long getId() {
@@ -82,18 +80,10 @@ public class User {
 		this.company = company;
 	}
 
-	public Long getCompanyId() {
-		return companyId;
-	}
-
-	public void setCompanyId(Long companyId) {
-		this.companyId = companyId;
-	}
-
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", type=" + type
-				+ ", companyId=" + companyId + ", company=" + company + "]";
+				+ ", company=" + company + "]";
 	}
 
 }

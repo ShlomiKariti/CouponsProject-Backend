@@ -21,11 +21,11 @@ import com.shlomi.coupons.threads.RemoveExpiredCouponsTask;
 
 @Controller
 public class CouponsController {
-	
+
 	@Autowired
 	private ICouponsDao couponsDao;
 
-	
+
 	public CouponsController() {
 
 	}
@@ -53,7 +53,7 @@ public class CouponsController {
 	}
 
 	public void createCoupon(Coupon coupon) throws ApplicationException {
-		//Validation
+
 		if (coupon == null) {
 			throw new ApplicationException(ErrorType.INVALID_COUPON, "A null coupon");
 		}
@@ -69,13 +69,17 @@ public class CouponsController {
 		if(coupon.getPrice()==0) {
 			throw new ApplicationException(ErrorType.INVALID_PRICE,"No price input.");
 		}
-		
-		
+
+		if (coupon.getExpirationDate().before(new Date())) {
+			throw new ApplicationException(ErrorType.INVALID_DATE,"Date has already passed.");
+		}
+
+
 		try {
 			this.couponsDao.save(coupon);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.GENERAL_ERROR,"General Error" );
+			throw new ApplicationException(ErrorType.GENERAL_ERROR,"Failed to create coupon." );
 		}
 	}
 
@@ -87,7 +91,7 @@ public class CouponsController {
 
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_COUPON,"Failed to remove the coupon.");
 		}
 	}
 
@@ -99,31 +103,48 @@ public class CouponsController {
 
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_COUPON,"No coupon has been found.");
 		}
 	}
 
 	public void updateCoupon(Coupon coupon) throws ApplicationException {
+
+		if (coupon == null) {
+			throw new ApplicationException(ErrorType.INVALID_COUPON, "A null coupon");
+		}
+
+		if(coupon.getCategory()==null) {
+			throw new ApplicationException(ErrorType.INVALID_CATEGORY,"Category has no been selected");
+		}
+
+		if(coupon.getTitle()=="") {
+			throw new ApplicationException(ErrorType.INVALID_COUPON_TITLE,"No title");
+		}
+
+		if(coupon.getPrice()==0) {
+			throw new ApplicationException(ErrorType.INVALID_PRICE,"No price input.");
+		}
+
 		try {
 			this.couponsDao.save(coupon);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_COUPON,"Failed to update coupon.");
 		}
 	}
 
 	public List<Coupon> getAllCouponsByCompanyId(long companyID) throws ApplicationException {
-		
+
 		try {
 			return this.couponsDao.getAllCouponsByCompanyId(companyID);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_COUPON,"No coupons have been found.");
 		}
 	}
 
 	public void removeExpiredCoupons() throws ApplicationException{
-		
+
 		Date currentDate = Calendar.getInstance().getTime();
 		couponsDao.removeExpiredCoupons(currentDate);
 	}
@@ -134,7 +155,7 @@ public class CouponsController {
 			return this.couponsDao.getAllCoupons();
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_COUPON,"Failed to remove coupons.");
 		}
 	}
 
@@ -144,7 +165,18 @@ public class CouponsController {
 			return this.couponsDao.findByCategory(category);
 		}
 		catch (Exception e) {
-			throw new ApplicationException(ErrorType.INVALID_COUPON,"General Error");
+			throw new ApplicationException(ErrorType.INVALID_COUPON,"Failed to find coupons.");
+		}
+	}
+
+	public void updateStock(long id, int amount) throws ApplicationException {
+
+		try {
+			Coupon coupon = this.getCoupon(id);
+			coupon.setCouponStock(coupon.getCouponStock() - amount);
+		}
+		catch (Exception e) {
+			throw new ApplicationException(ErrorType.INVALID_COUPON,"Failed to update amount of coupon stock..");
 		}
 	}
 

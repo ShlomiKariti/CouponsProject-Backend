@@ -1,5 +1,6 @@
 package com.shlomi.coupons.beans;
 
+
 import java.sql.Date;
 
 import javax.persistence.Column;

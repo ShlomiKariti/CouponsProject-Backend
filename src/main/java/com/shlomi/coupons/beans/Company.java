@@ -13,7 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "companies")
@@ -37,11 +36,11 @@ public class Company {
 	@Column(nullable = false)
 	private String address;
 	
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnore
 	@OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE)
     private List<User> users;
 	
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnore
 	@OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE)
 	private List<Coupon> coupons;
 	
@@ -94,11 +93,20 @@ public class Company {
 		this.users = users;
 	}
 
+	public List<Coupon> getCoupons() {
+		return coupons;
+	}
+
+	public void setCoupons(List<Coupon> coupons) {
+		this.coupons = coupons;
+	}
+
 	@Override
 	public String toString() {
 		return "Company [id=" + id + ", companyName=" + companyName + ", email=" + email + ", phoneNumber="
-				+ phoneNumber + ", address=" + address + ", users=" + users + "]";
+				+ phoneNumber + ", address=" + address + ", users=" + users + ", coupons=" + coupons + "]";
 	}
+
 
 	
 }
