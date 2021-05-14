@@ -28,10 +28,11 @@ import com.shlomi.coupons.logic.UsersController;
 @RequestMapping("/user")
 public class UsersApi {
 
+	
 	@Autowired
 	private UsersController usersController;
 
-	@PostMapping
+	@PostMapping("/register")
 	public void createUser(@RequestBody User user) throws ApplicationException {
 		this.usersController.createUser(user);
 	}
@@ -63,7 +64,7 @@ public class UsersApi {
 	public List<User> getAllUsersByCompanyID(@RequestParam("id")long companyId) throws ApplicationException {
 		return this.usersController.getAllUsersByCompanyID(companyId);
 	}
-	
+
 	@PutMapping("/changePassword")
 	public void changePassword(@RequestBody ChangePasswordDetails changePasswordDetails, @RequestAttribute("userData") PostLoginData postLoginData) throws ApplicationException {
 		User user = this.usersController.getUser(postLoginData.getId());

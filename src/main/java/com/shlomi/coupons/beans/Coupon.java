@@ -115,8 +115,6 @@ public class Coupon {
 	public void setCouponStock(int couponStock) {
 		this.couponStock = couponStock;
 	}
-	
-	
 
 	public Company getCompany() {
 		return company;
